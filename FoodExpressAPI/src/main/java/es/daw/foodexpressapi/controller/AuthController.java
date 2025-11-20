@@ -23,7 +23,6 @@ import java.util.Optional;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
@@ -34,11 +33,8 @@ public class AuthController {
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
         String token = jwtService.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponse(token) );
-
     }
-
 }

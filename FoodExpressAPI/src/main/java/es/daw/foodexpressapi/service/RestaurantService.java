@@ -18,21 +18,13 @@ public class RestaurantService {
         return restaurantRepository.findAll().stream()
                 .map(this::toDTO)
                 .toList();
-
     }
 
     public RestaurantDTO toDTO(Restaurant restaurant){
-//        RestaurantDTO restaurantDTO = new RestaurantDTO();
-//        restaurantDTO.setName(restaurant.getName());
-//        restaurantDTO.setAddress(restaurant.getAddress());
-//        restaurantDTO.setPhone(restaurant.getPhone());
-//        return restaurantDTO;
         return RestaurantDTO.builder()
                 .name(restaurant.getName())
                 .address(restaurant.getAddress())
                 .phone(restaurant.getPhone())
                 .build();
     }
-
-
 }

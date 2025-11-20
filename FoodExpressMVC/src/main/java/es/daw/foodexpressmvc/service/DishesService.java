@@ -1,6 +1,6 @@
 package es.daw.foodexpressmvc.service;
 
-import es.daw.foodexpressmvc.dto.RestaurantDTO;
+import es.daw.foodexpressmvc.dto.DishDTO;
 import es.daw.foodexpressmvc.exception.ConnectionApiRestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,23 +11,23 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RestaurantsService {
+public class DishesService {
     private final WebClient webClientAPI;
 
-    public List<RestaurantDTO> getAllRestaurants(){
-        RestaurantDTO[] restaurants;
+    public List<DishDTO> getAllDishes(){
+        DishDTO[] dishes;
 
         try {
-            restaurants = webClientAPI
+            dishes = webClientAPI
                     .get()
-                    .uri("/restaurants")
+                    .uri("/dishes")
                     .retrieve()
-                    .bodyToMono(RestaurantDTO[].class)
+                    .bodyToMono(DishDTO[].class)
                     .block(); //asíncrono
         }catch (Exception e){
             throw new ConnectionApiRestException("Could not connect to FoodExpress API");
         }
 
-        return Arrays.asList(restaurants);
+        return Arrays.asList(dishes);
     }
 }

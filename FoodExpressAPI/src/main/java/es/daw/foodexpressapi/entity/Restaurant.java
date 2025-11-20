@@ -7,7 +7,6 @@ import lombok.Getter;
 @Table(name = "restaurants")
 @Getter
 public class Restaurant {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,7 +18,4 @@ public class Restaurant {
 
     @Column(length = 20)
     private String phone;
-
-
-
 }

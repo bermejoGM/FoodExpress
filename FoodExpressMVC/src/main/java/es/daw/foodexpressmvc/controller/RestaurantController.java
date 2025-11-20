@@ -13,18 +13,13 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class RestaurantController {
-
-    private final RestaurantsService  restaurantsService;
+    private final RestaurantsService restaurantsService;
 
     @GetMapping("/restaurants")
     public String listRestaurants(Model model) {
-
         List<RestaurantDTO> restaurants = restaurantsService.getAllRestaurants();
-
         model.addAttribute("restaurants", restaurants);
 
         return "restaurants";
-
     }
-
 }

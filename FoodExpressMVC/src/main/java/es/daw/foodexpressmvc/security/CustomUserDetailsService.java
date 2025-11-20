@@ -32,6 +32,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
 
         return user;
-
     }
 }
