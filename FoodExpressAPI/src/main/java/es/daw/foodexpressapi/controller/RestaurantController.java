@@ -14,13 +14,10 @@ import java.util.List;
 @RequestMapping("/api/restaurants")
 @RequiredArgsConstructor
 public class RestaurantController {
-
     private final RestaurantService restaurantService;
 
     @GetMapping
     public ResponseEntity<List<RestaurantDTO>> findAll() {
         return ResponseEntity.ok(restaurantService.getAllRestaurants());
-
     }
-
 }

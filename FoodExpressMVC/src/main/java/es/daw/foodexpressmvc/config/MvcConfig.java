@@ -18,6 +18,7 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("home"); // AHORA LA PAGINA PRINCIPAL ES home.html
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/error").setViewName("error");
+        registry.addViewController("/dishes").setViewName("dishes");
         //registry.addViewController("/dashboard").setViewName("dashboard"); // Esta hecho en DashboardController
     }
 }
