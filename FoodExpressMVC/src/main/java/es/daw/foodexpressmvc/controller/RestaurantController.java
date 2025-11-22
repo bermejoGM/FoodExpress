@@ -47,7 +47,7 @@ public class RestaurantController {
     @PostMapping("/create")
     public String create(@ModelAttribute("restaurant") RestaurantDTO restaurantDTO, Model model, Principal principal) {
         RestaurantDTO saved = restaurantsService.create(restaurantDTO);
-//        model.addAtribute("username", principal.getName());
+        model.addAttribute("username", principal.getName());
         model.addAttribute(saved);
         // Pendiente: enviar el restaurante salvado..
         return "restaurants/create-success";
