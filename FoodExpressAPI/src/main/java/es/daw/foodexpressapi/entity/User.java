@@ -32,8 +32,9 @@ public class User implements UserDetails {
 
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="role_id", nullable = false) // clave foránea role_id
+    //@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name="role_id", nullable = false)
     private Role role;
 
     // --------------------- 5 MÉTODOS DE LA INTERFACE UserDetails -----------------
@@ -41,6 +42,11 @@ public class User implements UserDetails {
     // Devuelve los roles convertidos en objetos GrantedAuthority
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return roles.stream()
+//                // si en bd el rol no tiene el prefijo ROLE_
+//                //.map (rol -> (GrantedAuthority) () -> "ROLE_"+rol.getName())
+//                .map(role -> (GrantedAuthority) role::getName)
+//                .collect(Collectors.toSet());
         String roleName = role.getName().toUpperCase();
 
         if(!roleName.startsWith("ROLE_")){
@@ -57,7 +63,7 @@ public class User implements UserDetails {
     @Override
     public boolean isAccountNonExpired() {
         return true;
-        // Devuelve true si la fecha actual es anterior o igual a la de expiración
+        // // Devuelve true si la fecha actual es anterior o igual a la de expiración
         //    return !LocalDate.now().isAfter(accountExpirationDate);
     }
 

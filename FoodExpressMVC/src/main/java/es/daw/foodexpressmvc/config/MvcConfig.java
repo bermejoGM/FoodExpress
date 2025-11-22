@@ -15,10 +15,11 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("home"); // * AHORA LA PAGINA PRINCIPAL ES home.html
+        //registry.addViewController("/").setViewName("login");
+        registry.addViewController("/").setViewName("home");
+        registry.addViewController("/home").setViewName("home");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/error").setViewName("error");
-        //registry.addViewController("/dishes").setViewName("dishes"); // ! importante no olvidar
-        //registry.addViewController("/dashboard").setViewName("dashboard"); // Esta hecho en DashboardController
+        //registry.addViewController("/dashboard").setViewName("dashboard");
     }
 }

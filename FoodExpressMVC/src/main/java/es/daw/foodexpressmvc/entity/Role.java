@@ -46,4 +46,5 @@ public class Role {
                 ", name='" + name + '\'' +
                 '}';
     }
+
 }

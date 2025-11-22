@@ -79,7 +79,7 @@ public class User implements UserDetails {
     @Override
     public boolean isAccountNonExpired() {
         return true;
-         // Devuelve true si la fecha actual es anterior o igual a la de expiración
+        // // Devuelve true si la fecha actual es anterior o igual a la de expiración
         //    return !LocalDate.now().isAfter(accountExpirationDate);
     }
 

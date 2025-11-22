@@ -21,6 +21,6 @@ public class DishController {
         model.addAttribute("dishes", dishes);
         model.addAttribute("username", principal.getName());
 
-        return "dishes";
+        return "dishes/dishes"; // ! fijarse en el cambio de ruta de los templates !!!
     }
 }

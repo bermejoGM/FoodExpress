@@ -10,7 +10,7 @@
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">FoodExpress</a>
+        <a class="navbar-brand" href="/dashboard">FoodExpress</a>
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ms-auto align-items-center">
@@ -48,8 +48,8 @@
                 <thead class="table-dark">
                 <tr>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Price (€)</th>
-                    <th>Category</th>/home/daimon/Escritorio/Info_Practicas.txt
                     <th>Restaurant</th>
                 </tr>
                 </thead>
@@ -57,12 +57,11 @@
                 <tbody>
                 <tr th:each="dish : ${dishes}">
                     <td th:text="${dish.name}"></td>
-                    <td th:text="${dish.price}"></td>
                     <td th:text="${dish.category}"></td>
+                    <td th:text="${dish.price}"></td>
                     <td th:text="${dish.restaurantName}"></td>
                 </tr>
                 </tbody>
-
             </table>
 
         </div>

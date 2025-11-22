@@ -25,7 +25,7 @@ public class DishService {
                 .name(dish.getName())
                 .price(dish.getPrice())
                 .category(dish.getCategory())
-                .restaurantName(dish.getRestaurant().getName()) // ? porque tengo que poner el id ???
+                .restaurantName(dish.getRestaurant().getName())
                 .build();
     }
 }

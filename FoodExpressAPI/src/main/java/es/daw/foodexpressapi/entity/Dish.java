@@ -23,5 +23,5 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name="restaurant_id", nullable = false) // clave foránea restaurant_id
-    private Restaurant restaurant; // ? Tengo que poner restaurant_id ???
+    private Restaurant restaurant;
 }
