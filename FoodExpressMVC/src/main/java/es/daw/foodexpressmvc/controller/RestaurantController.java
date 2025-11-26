@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/restaurants")
 public class RestaurantController {
 
-    private final RestaurantsService  restaurantsService;
+    private final RestaurantsService restaurantsService;
 
     @GetMapping
     public String listRestaurants(Model model) {
@@ -30,19 +30,11 @@ public class RestaurantController {
 
     }
 
-//    @GetMapping("/menu")
-//    //public String showMenu(Principal principal, Model model) {
-//    public String showMenu(){
-//        //model.addAttribute(principal.getName());
-//        return "restaurants/restaurants-menu";
-//
-//    }
-
     @GetMapping("/create")
     public String showForm(Model model, Principal principal) {
         model.addAttribute(principal.getName());
         model.addAttribute("restaurant", new RestaurantDTO());
-        model.addAttribute("mode","create");
+        model.addAttribute("mode", "create");
         return "restaurant-form";
     }
 
@@ -75,29 +67,23 @@ public class RestaurantController {
 
         RestaurantDTO restDTO = restaurantsService.findById(id);
 
-        model.addAttribute("mode","edit");
-        model.addAttribute("restaurant",restDTO);
+        model.addAttribute("mode", "update");
+        model.addAttribute("restaurant", restDTO);
         return "restaurants/restaurant-form";
-
     }
 
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id,
                          @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,
-                         BindingResult bindingResult
-    ){
-
-        if (bindingResult.hasErrors()){
-            return "restaurants/restaurant-form"; //pendiente leer!!!!
+                         BindingResult bindingResult,
+                         Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("mode", "update");
+            return "restaurants/restaurant-form";
         }
 
-
-        restaurantsService.update(id,restaurantDTO);
-
+        restaurantsService.update(id, restaurantDTO);
 
         return "redirect:/restaurants"; // patrong PRG - Post Redirect Get
     }
-
-
-
 }

@@ -44,5 +44,4 @@ public class RestaurantDTO {
             message = "Invalid phone format"
     )
     private String phone;
-
 }

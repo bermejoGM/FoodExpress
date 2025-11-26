@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+// All y No ArgsConstructor para no crear un constructor vacio
 public class RestaurantDTO {
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     // Normalmente el ID solo lo envía la API, no el cliente
@@ -42,9 +43,9 @@ public class RestaurantDTO {
     @NotBlank(message = "Phone is required")
     @Size(min = 9, max = 20, message = "Phone must be between 9 and 20 digits")
     // Admite: números, espacios, guiones, + (por si es internacional)
-    @Pattern(
-            regexp = "^[0-9 +()-]{9,20}$",
-            message = "Invalid phone format"
-    )
+//    @Pattern(
+//            regexp = "^[0-9 +()-]{9,20}$",
+//            message = "Invalid phone format"
+//    )
     private String phone;
 }

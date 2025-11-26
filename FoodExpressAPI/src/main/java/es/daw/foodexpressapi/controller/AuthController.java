@@ -23,6 +23,10 @@ import java.util.Optional;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
+    /**
+     * Controlador para la autenticación de usuarios.
+     * Recibe las credenciales del usuario, las valida y genera un token JWT si son correctas.
+     */
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
@@ -38,6 +42,5 @@ public class AuthController {
         String token = jwtService.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponse(token) );
-
     }
 }

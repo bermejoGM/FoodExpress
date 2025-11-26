@@ -39,8 +39,6 @@ public class RestaurantsService {
         }
 
         return Arrays.asList(restaurants);
-
-
     }
 
     /**
@@ -100,26 +98,6 @@ public class RestaurantsService {
      * @return
      */
     public RestaurantDTO findById(Long id){
-
-//        RestaurantDTO restaurant;
-//
-//        try {
-//            restaurant = webClientAPI
-//                    .get()
-//                    .uri("/restaurants/{id}",id)
-//                    .retrieve()
-//                    .bodyToMono(RestaurantDTO.class)
-//                    .block(); //asíncrono
-//        }catch (Exception e){
-//            // Pendiente crear excepción propia
-//            // Pendiente crear Globla ExceptionHancler: que lea la exceión y redirija a api-error
-//            //
-//            throw new ConnectionApiRestException("Could not connect to FoodExpress API");
-//        }
-//
-//        return restaurant;
-
-        // --------------
         // Vía java
         List<RestaurantDTO> dtos = getAllRestaurants();
 
@@ -128,9 +106,6 @@ public class RestaurantsService {
                 .findFirst()
                 // Y si no existe!! qué navegación? a qué página?
                 .orElseThrow(() -> new RuntimeException("Restaurante no encontrado!!!"));
-
-
-
     }
 
     public void update(Long id, RestaurantDTO dto){
@@ -150,8 +125,5 @@ public class RestaurantsService {
             //throw new ConnectionApiRestException("Could not connect to FoodExpress API to create restaurant");
             throw new ConnectionApiRestException(e.getMessage());
         }
-
     }
-
-
 }
