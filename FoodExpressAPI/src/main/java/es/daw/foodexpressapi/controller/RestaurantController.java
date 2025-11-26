@@ -15,15 +15,18 @@ import java.util.Optional;
 @RequestMapping("/api/restaurants")
 @RequiredArgsConstructor
 public class RestaurantController {
+
     private final RestaurantService restaurantService;
 
     @GetMapping
     public ResponseEntity<List<RestaurantDTO>> findAll() {
         return ResponseEntity.ok(restaurantService.getAllRestaurants());
+
     }
 
+    // MEJORABLE, PORQUE EL SERVICIO NO DEVUELVE UN OPTIONAL..
     @PostMapping
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RestaurantDTO> create(@RequestBody RestaurantDTO restaurantDTO) {
 
         Optional<RestaurantDTO> result = restaurantService.create(restaurantDTO);
@@ -34,5 +37,28 @@ public class RestaurantController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (restaurantService.delete(id)) {
+            return ResponseEntity.noContent().build();  // 204 NO CONTENT
+        } else {
+            return ResponseEntity.notFound().build();   // 404 NOT FOUND
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<RestaurantDTO> update(@PathVariable Long id,
+                                                @RequestBody RestaurantDTO restaurantDTO) {
+
+        return ResponseEntity.ok(restaurantService.update(id, restaurantDTO));
+
+
+    }
+
+
 }

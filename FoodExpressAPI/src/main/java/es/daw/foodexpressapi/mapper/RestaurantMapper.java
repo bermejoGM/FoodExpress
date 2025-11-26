@@ -3,10 +3,16 @@ package es.daw.foodexpressapi.mapper;
 import es.daw.foodexpressapi.dto.RestaurantDTO;
 import es.daw.foodexpressapi.entity.Restaurant;
 
+import java.util.List;
+
 //@Mapper(componentModel = "spring")
 public interface RestaurantMapper {
 
 //    Restaurant toEntity(RestaurantDTO dto);
-//    RestaurantDTO
+//    RestaurantDTO toDTO(Restaurant entity);
+
+//    List<RestaurantDTO> toDTOs(List<Restaurant> entities);
+//
+//    List<Restaurant> toEntities(List<RestaurantDTO> dtos);
 
 }
