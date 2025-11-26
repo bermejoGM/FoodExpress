@@ -3,11 +3,15 @@ package es.daw.foodexpressmvc.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RestaurantDTO {
     //@JsonProperty(access = JsonProperty.Access.READ_ONLY)
     // Normalmente el ID solo lo envía la API, no el cliente
@@ -43,8 +47,4 @@ public class RestaurantDTO {
             message = "Invalid phone format"
     )
     private String phone;
-
-    // ? No se porque, pero si no pongo esto, si la profe no lo tiene y no la da error
-    public RestaurantDTO() {
-    }
 }

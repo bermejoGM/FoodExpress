@@ -21,7 +21,6 @@ public class RestaurantController {
     @GetMapping
     public ResponseEntity<List<RestaurantDTO>> findAll() {
         return ResponseEntity.ok(restaurantService.getAllRestaurants());
-
     }
 
     // MEJORABLE, PORQUE EL SERVICIO NO DEVUELVE UN OPTIONAL..
