@@ -35,6 +35,7 @@ public class RestaurantController {
 //    public String showMenu(){
 //        //model.addAttribute(principal.getName());
 //        return "restaurants/restaurants-menu";
+//
 //    }
 
     @GetMapping("/create")
@@ -96,4 +97,7 @@ public class RestaurantController {
 
         return "redirect:/restaurants"; // patrong PRG - Post Redirect Get
     }
+
+
+
 }

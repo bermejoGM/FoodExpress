@@ -44,5 +44,7 @@ public class RestaurantDTO {
     )
     private String phone;
 
+    // ? No se porque, pero si no pongo esto, si la profe no lo tiene y no la da error
+    public RestaurantDTO() {
+    }
 }
-
