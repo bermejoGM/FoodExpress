@@ -30,8 +30,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-
-
                 /*
                 CSRF (Cross-Site Request Forgery) es un tipo de ataque donde un sitio malicioso puede hacer que un navegador autenticado
                 (por ejemplo, con una cookie activa) haga una petición no deseada a otro sitio en el que el usuario está logueado.
@@ -60,10 +58,10 @@ public class SecurityConfig {
                                 .permitAll()
                 )
                 .logout( logout -> logout
-                        .logoutUrl("/logout")
-                        .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/")
+                        .logoutUrl("/logout") // URL, no nombre de la página html
+                        .invalidateHttpSession(true) // invalidar sesión
+                        .deleteCookies("JSESSIONID") // borrar cookies
+                        .logoutSuccessUrl("/") // redirigir a la página principal
                         .permitAll()
                 )
                 .authenticationProvider(authenticationProvider())
@@ -86,7 +84,7 @@ public class SecurityConfig {
 
     // Sin este bean, Spring no sabrá cómo inyectar AuthenticationManager en tus clases.
     // Lo usamos en AuthController
-    // No lo necesitas si todo el proceso de autenticación lo maneja Spring automáticamente, como cuando usas formLogin()
+    // No lo necesitas si todo el proceso de autenticacion lo maneja Spring automaticamente, como cuando usas formLogin()
     // En una API REST con JWT, donde tú haces la autenticación manualmente y devuelves un token (como tú estás haciendo), sí lo necesitas.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

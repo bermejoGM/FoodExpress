@@ -16,12 +16,10 @@ public class RestaurantsService {
     private final WebClient webClientAPI;
     private final ApiAuthService apiAuthService;
 
-    /**
-     * Público. Sin jwt
-     * @return
-     */
-    public List<RestaurantDTO> getAllRestaurants(){
+    // ! Aqui no se procesa la logica de negocio, se delega a la API
 
+    // Público. Sin jwt
+    public List<RestaurantDTO> getAllRestaurants() {
         RestaurantDTO[] restaurants;
 
         try {
@@ -31,23 +29,16 @@ public class RestaurantsService {
                     .retrieve()
                     .bodyToMono(RestaurantDTO[].class)
                     .block(); //asíncrono
-        }catch (Exception e){
-            // Pendiente crear excepción propia
-            // Pendiente crear Globla ExceptionHancler: que lea la exceión y redirija a api-error
-            //
-            throw new ConnectionApiRestException("Could not connect to FoodExpress API");
+        } catch (Exception e) {
+            // throw new ConnectionApiRestException("Could not connect to FoodExpress API");
+            throw new ConnectionApiRestException(e.getMessage());
         }
 
         return Arrays.asList(restaurants);
     }
 
-    /**
-     * Con jwt
-     * @param dto
-     * @return
-     */
-    public RestaurantDTO create(RestaurantDTO dto){
-
+    // Con jwt
+    public RestaurantDTO create(RestaurantDTO dto) {
         String token = apiAuthService.getToken();
 
         RestaurantDTO restaurant;
@@ -56,12 +47,12 @@ public class RestaurantsService {
             restaurant = webClientAPI
                     .post()
                     .uri("/restaurants")
-                    .header("Authorization", "Bearer "+token)
+                    .header("Authorization", "Bearer " + token)
                     .bodyValue(dto)
                     .retrieve()
                     .bodyToMono(RestaurantDTO.class)
                     .block(); //asíncrono
-        }catch (Exception e){
+        } catch (Exception e) {
             // Pendiente crear excepción propia
             // Pendiente crear Globla ExceptionHancler: que lea la exceión y redirija a api-error
             //
@@ -70,34 +61,28 @@ public class RestaurantsService {
         }
 
         return restaurant;
-
     }
 
-    public void delete(Long id){
-
+    // Con jwt
+    public void delete(Long id) {
         String token = apiAuthService.getToken();
 
         try {
             webClientAPI
                     .delete()
-                    .uri("/restaurants/{id}",id)
-                    .header("Authorization", "Bearer "+token)
+                    .uri("/restaurants/{id}", id)
+                    .header("Authorization", "Bearer " + token)
                     .retrieve()
                     .bodyToMono(Void.class)
                     .block(); //asíncrono
-        }catch (Exception e){
+        } catch (Exception e) {
             //throw new ConnectionApiRestException("Could not connect to FoodExpress API to create restaurant");
             throw new ConnectionApiRestException(e.getMessage());
         }
-
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public RestaurantDTO findById(Long id){
+    // Público. Sin jwt
+    public RestaurantDTO findById(Long id) {
         // Vía java
         List<RestaurantDTO> dtos = getAllRestaurants();
 
@@ -108,20 +93,20 @@ public class RestaurantsService {
                 .orElseThrow(() -> new RuntimeException("Restaurante no encontrado!!!"));
     }
 
-    public void update(Long id, RestaurantDTO dto){
-
+    // Con jwt
+    public void update(Long id, RestaurantDTO dto) {
         String token = apiAuthService.getToken();
 
         try {
             webClientAPI
                     .put()
-                    .uri("/restaurants/{id}",id)
-                    .header("Authorization", "Bearer "+token)
+                    .uri("/restaurants/{id}", id)
+                    .header("Authorization", "Bearer " + token)
                     .bodyValue(dto)
                     .retrieve()
                     .bodyToMono(RestaurantDTO.class)
                     .block(); //asíncrono
-        }catch (Exception e){
+        } catch (Exception e) {
             //throw new ConnectionApiRestException("Could not connect to FoodExpress API to create restaurant");
             throw new ConnectionApiRestException(e.getMessage());
         }
