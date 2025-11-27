@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RestaurantManualMapper {
+    // Transforma de Entity a DTO y viceversa (el mapper no funciona asi que hay que hacerlo manualmente)
 
     public RestaurantDTO toDTO(Restaurant restaurant){
         return RestaurantDTO.builder()

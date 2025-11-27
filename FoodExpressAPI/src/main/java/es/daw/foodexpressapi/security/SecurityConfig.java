@@ -28,6 +28,7 @@ public class SecurityConfig {
     private final JwtFilter jwtAuthFilter;
     private final CustomUserDetailsService userDetailsService;
 
+    // Los @Beans devuelven objetos registrados en el contexto de Spring y disponibles para inyección en controladores o servicios
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -49,7 +50,7 @@ public class SecurityConfig {
                     - No permitirá que le envíen tokens en el header Authorization.
 
                     ¿Por qué OPTIONS?
-                        Cuando haces una petición POST o DELETE con Authorization, el navegador envía una preflight request con método OPTIONS.
+                        Cuando haces una petición POST o DELETE con Authorization, el navegador envía una preflight request con metodo OPTIONS.
                         Si no permites OPTIONS, el navegador bloquea la petición real.
                         Si no permites OPTIONS, las peticiones con token JWT nunca llegarán al backend.
                  */
@@ -82,9 +83,9 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.disable())) // permitir iframes (para H2)
                 // Esto actúa antes del controlador
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**","/h2-console/**").permitAll() // pública para login/register
-                        .requestMatchers(HttpMethod.GET,"/api/**").permitAll() // si todos los get son público
-                        //.requestMatchers(HttpMethod.POST,"/api/restaurants").hasRole("ADMIN")
+                        .requestMatchers("/auth/**", "/h2-console/**").permitAll() // pública para login/register
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll() // los get son publicos
+                        //.requestMatchers(HttpMethod.POST,"/api/restaurants").hasRole("ADMIN") // esto esta controlado en el metodo create del RestaurantController  con @PreAuthorize
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
@@ -107,7 +108,7 @@ public class SecurityConfig {
 
     // Sin este bean, Spring no sabrá cómo inyectar AuthenticationManager en tus clases.
     // Lo usamos en AuthController
-    // No lo necesitas si todo el proceso de autenticación lo maneja Spring automáticamente, como cuando usas formLogin()
+    // No se necesita si todo el proceso de autenticacion lo maneja Spring automaticamente, como cuando usas formLogin()
     // En una API REST con JWT, donde tú haces la autenticación manualmente y devuelves un token (como tú estás haciendo), sí lo necesitas.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

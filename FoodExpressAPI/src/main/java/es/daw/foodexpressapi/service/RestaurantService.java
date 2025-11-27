@@ -16,57 +16,43 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RestaurantService {
 
+    // Logica de negocio CRUD para entidad Restaurant
+
     private final RestaurantRepository restaurantRepository;
-    private final ResourcePatternResolver resourcePatternResolver;
-    //private final RestaurantMapper restaurantMapper;
     private final RestaurantManualMapper restaurantManualMapper;
 
-    public List<RestaurantDTO> getAllRestaurants(){
-        return restaurantRepository.findAll().stream()
-                //.map(this::toDTO)
-                //.map(restaurantMapper::toDTO)
-                .map(restaurantManualMapper::toDTO)
-                .toList();
-
-    }
-
-    public Optional<RestaurantDTO> create(RestaurantDTO restaurantDTO){
+    // Devuelve un Optional por si no se crea correctamente (evita nulls)
+    public Optional<RestaurantDTO> create(RestaurantDTO restaurantDTO) {
         Restaurant restaurant = restaurantManualMapper.toEntity(restaurantDTO);
         Restaurant saved = restaurantRepository.save(restaurant);
+        
         return Optional.of(restaurantManualMapper.toDTO(saved));
-        //return Optional.of(restaurantMapper.toDTO(saved));
     }
 
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public boolean delete(Long id){
-        if (restaurantRepository.existsById(id)) {
-            restaurantRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public List<RestaurantDTO> getAllRestaurants() {
+        return restaurantRepository.findAll().stream()
+                .map(restaurantManualMapper::toDTO)
+                .toList();
     }
-
 
     public RestaurantDTO update(Long id, RestaurantDTO restaurantDTO) {
-        Restaurant restaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("El restaurante no existe con código "+id));
+        Restaurant restaurant = restaurantRepository.findById(id).orElseThrow(() -> new RuntimeException("El restaurante no existe con código " + id));
 
         restaurant.setName(restaurantDTO.getName());
         restaurant.setAddress(restaurantDTO.getAddress());
         restaurant.setPhone(restaurantDTO.getPhone());
 
-        Restaurant updated= restaurantRepository.save(restaurant);
-        return restaurantManualMapper.toDTO(updated);
+        Restaurant updated = restaurantRepository.save(restaurant);
 
+        return restaurantManualMapper.toDTO(updated);
     }
 
+    public boolean delete(Long id) {
+        if (restaurantRepository.existsById(id)) {
+            restaurantRepository.deleteById(id);
+            return true;
+        }
 
-
-
-
+        return false;
+    }
 }

@@ -28,9 +28,12 @@ public class AuthController {
      * Recibe las credenciales del usuario, las valida y genera un token JWT si son correctas.
      */
 
+    // Autentica credenciales
     private final AuthenticationManager authenticationManager;
+    // Genera tokens JWT
     private final JwtService jwtService;
 
+    // Recibe las credenciales, autentica, genera token y lo devuelve en la respuesta
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request){
         Authentication authentication = authenticationManager.authenticate(

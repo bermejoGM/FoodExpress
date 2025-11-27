@@ -9,14 +9,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- * Spring Security trabaja con un sistema de autenticación basado en UserDetailsService, que carga los usuarios desde la base de datos.
- * User, al implementar UserDetails, tu entidad User es compatible con Spring Security y puedes personalizar la lógica de autenticación y autorización.
- */
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-
+    /**
+     * Spring Security trabaja con un sistema de autenticación basado en UserDetailsService, que carga los usuarios desde la base de datos.
+     * User, al implementar UserDetails, tu entidad User es compatible con Spring Security y puedes personalizar la lógica de autenticación y autorización.
+     * Carga el usuario de la base de datos para la autenticación
+     */
     private final UserRepository userRepository;
 
 //    @Autowired
@@ -28,10 +28,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // Cargar el usuario desde de la base de datos
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(username) // Busca el usuario por su nombre de usuario (creado en UserRepository)
                 .orElseThrow(() -> new UsernameNotFoundException(username));
 
         return user;
-
     }
 }

@@ -26,12 +26,12 @@ public class Role {
         users = new HashSet<User>();
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
         //user.addRole(this); // llamada infinita!!!
     }
 
-    public void removeUser(User user){
+    public void removeUser(User user) {
         users.remove(user);
     }
 
@@ -42,7 +42,4 @@ public class Role {
                 ", name='" + name + '\'' +
                 '}';
     }
-
 }
-
-

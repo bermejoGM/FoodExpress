@@ -37,7 +37,7 @@ public class User implements UserDetails {
     @JoinColumn(name="role_id", nullable = false)
     private Role role;
 
-    // --------------------- 5 MÉTODOS DE LA INTERFACE UserDetails -----------------
+    // --------------------- 5 MÉTODOS DE LA INTERFACE UserDetails (se implementa) -----------------
 
     // Devuelve los roles convertidos en objetos GrantedAuthority
     @Override
@@ -47,6 +47,7 @@ public class User implements UserDetails {
 //                //.map (rol -> (GrantedAuthority) () -> "ROLE_"+rol.getName())
 //                .map(role -> (GrantedAuthority) role::getName)
 //                .collect(Collectors.toSet());
+
         String roleName = role.getName().toUpperCase();
 
         if(!roleName.startsWith("ROLE_")){
@@ -54,9 +55,6 @@ public class User implements UserDetails {
         }
 
         return List.of(new SimpleGrantedAuthority(roleName));
-
-
-
     }
 
     /**
@@ -90,5 +88,4 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isEnabled() { return true; }
-
 }

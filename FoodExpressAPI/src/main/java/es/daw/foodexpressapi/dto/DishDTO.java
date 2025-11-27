@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 
 @Data
 public class DishDTO {
-
     // ===== NAME =====
     @NotBlank(message = "Dish name is required")
     @Size(min = 2, max = 100, message = "Dish name must be between 2 and 100 characters")

@@ -45,6 +45,7 @@ public class JwtService {
      * Ideal para pruebas o ejemplos donde NO necesitas persistencia del token entre reinicios del servidor.
      * Cada vez que reinicias la app, se genera una nueva clave.
      * Esto hace que los tokens emitidos antes del reinicio ya no sean válidos, porque la firma ya no coincide.
+     *
      * @return
      */
     private SecretKey generateSecureKey() {
@@ -53,13 +54,12 @@ public class JwtService {
 
     /**
      * Devuelve la clave secreta usada para firmar y validar tokens.
+     *
      * @return
      */
     private SecretKey getSigningKey() {
-        //return SECRET_KEY;
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
-
     }
 
     /**
@@ -67,6 +67,7 @@ public class JwtService {
      * - Incluye los roles del usuario en la sección claims.
      * - Expira después de X tiempo según configuración.
      * - Firma el token con la clave secreta SECRET_KEY usando el algoritmo HS256.
+     *
      * @param userDetails
      * @return
      */
@@ -97,7 +98,7 @@ public class JwtService {
 
     /*
         Un claim son piezas de información sobre un usuario que se encuentran empaquetadas y firmadas con un token de seguridad
-        Método genérico para extraer datos del token:
+        Metodo genérico para extraer datos del token:
             - extractClaim() permite extraer cualquier dato del token, como:
             - getSubject() → username
             - getExpiration() → fecha de expiración
@@ -110,9 +111,10 @@ public class JwtService {
 
     /**
      * Verifica si el token es válido comparando:
-     *
+     * <p>
      * Si el username en el token es el mismo que en UserDetails.
      * Si el token no ha expirado.
+     *
      * @param token
      * @param userDetails
      * @return
@@ -125,8 +127,9 @@ public class JwtService {
     }
 
     /**
-     *  Extrae la fecha de expiración del token y la compara con la fecha actual.
-     *  Si la fecha de expiración ya pasó, el token es inválido.
+     * Extrae la fecha de expiración del token y la compara con la fecha actual.
+     * Si la fecha de expiración ya pasó, el token es inválido.
+     *
      * @param token
      * @return
      */
@@ -137,11 +140,12 @@ public class JwtService {
     /**
      * Verifica y decodifica el token JWT.
      * Extrae todos los datos (claims), incluyendo:
-     *
+     * <p>
      * sub → nombre de usuario
      * roles → lista de roles
      * iat → fecha de emisión
      * exp → fecha de expiración
+     *
      * @param token
      * @return
      */
@@ -152,7 +156,4 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload();
     }
-
-
 }
-

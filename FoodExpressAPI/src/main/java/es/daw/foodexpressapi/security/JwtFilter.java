@@ -41,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // POST /api/productos
         // Authorization: Bearer afsldjflaksd flaksdf.asdflasdjf askldfjalsdfkjalsdfjlasdfjalsdf.sadjfñklasd fklasdjflkasd
 
-        System.out.println("Authorization header: [" + authHeader+"]");
+        System.out.println("Authorization header: [" + authHeader + "]");
 
         // Si no hay token, la solicitud sigue su curso (para endpoint públicos)
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -66,11 +66,11 @@ public class JwtFilter extends OncePerRequestFilter {
             // Cargamos el usuario de la base de datos
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            if(jwtService.isTokenValid(token,userDetails)){
+            if (jwtService.isTokenValid(token, userDetails)) {
 
                 // Crear el objeto con el usuario autenticado y su roles
                 // Segundo parámetro es null porque no necesitamos almacenar las credenciales (la contraseña) porque el token es la prueba de autenticación
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
                 // Asociar detalles de la solicitud (información adicional del contexto de la socitud http, como ip, nombre del host...)
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -81,10 +81,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             }
-
         }
 
         filterChain.doFilter(request, response);
-
     }
 }
