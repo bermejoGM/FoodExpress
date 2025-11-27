@@ -1,12 +1,18 @@
 package es.daw.foodexpressapi.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
 public class DishDTO {
+
+    // ! El id
+    private Long id;
+
     // ===== NAME =====
     @NotBlank(message = "Dish name is required")
     @Size(min = 2, max = 100, message = "Dish name must be between 2 and 100 characters")

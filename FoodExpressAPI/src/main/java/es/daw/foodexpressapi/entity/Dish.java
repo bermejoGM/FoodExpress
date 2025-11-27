@@ -1,11 +1,15 @@
 package es.daw.foodexpressapi.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "dishes")
+@Getter
+@Setter
 // Representa la tabla dishes de la base de datos
 public class Dish {
     @Id
