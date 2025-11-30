@@ -82,6 +82,7 @@ public class RestaurantController {
                          @Valid @ModelAttribute("restaurant") RestaurantDTO restaurantDTO,
                          BindingResult bindingResult,
                          Model model) {
+        // BindingResult contiene (si se generan) errores de validacion
         if (bindingResult.hasErrors()) {
             model.addAttribute("mode", "update");
 

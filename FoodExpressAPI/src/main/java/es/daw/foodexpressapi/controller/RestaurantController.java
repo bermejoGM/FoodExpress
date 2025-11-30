@@ -1,6 +1,8 @@
 package es.daw.foodexpressapi.controller;
 
+import es.daw.foodexpressapi.dto.DishDTO;
 import es.daw.foodexpressapi.dto.RestaurantDTO;
+import es.daw.foodexpressapi.service.DishService;
 import es.daw.foodexpressapi.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,21 @@ public class RestaurantController {
 
     // Se inyecta el servicio para la logica de negocio (CRUD --> Crear, Leer, Actualizar, Borrar, Buscar por ... )
     private final RestaurantService restaurantService;
+    private final DishService dishService;
 
-    // Obtener todos los restaurantes
+    // Obtener todos los restaurantes y busca por nombre
     @GetMapping
     // ResponseEntity envuelve el objeto de respuesta con HTTP status, headers y codigos de estado como 200, 201, 404, etc.
-    public ResponseEntity<List<RestaurantDTO>> findAll() {
-        return ResponseEntity.ok(restaurantService.getAllRestaurants());
+    public ResponseEntity<List<RestaurantDTO>> find(@RequestParam(required = false) String name) {
+        List<RestaurantDTO> restaurants;
+
+        if (name != null && !name.isEmpty()) {
+            restaurants = restaurantService.getRestaurantsByName(name);
+        } else {
+            restaurants = restaurantService.getAllRestaurants();
+        }
+
+        return ResponseEntity.ok(restaurants);
     }
 
     @PostMapping
@@ -58,5 +69,34 @@ public class RestaurantController {
 
         // Antes estaba con un else aunque debe funcionar exactamente igual
         return ResponseEntity.notFound().build();   // 404 NOT FOUND
+    }
+
+    /**
+     * Este metodo sive para:
+     * 1. Mostrar los platos de un restaurante
+     * 2. Mostrar los platos de un restaurante con nombre x
+     */
+    @GetMapping("/{id}/dishes")
+    public ResponseEntity<List<DishDTO>> getDishesByRestaurant(
+            @PathVariable Long id,
+            @RequestParam(value = "category", required = false) String category) {
+
+        // Si viene parámetro category, buscar por restaurante + categoría
+        if (category != null && !category.isEmpty()) {
+            return ResponseEntity.ok(dishService.getDishesByRestaurantAndCategory(id, category));
+        }
+
+        // Si no viene, devolver todos los platos del restaurante
+        return ResponseEntity.ok(dishService.getDishesByRestaurant(id));
+    }
+
+    @PostMapping("/{id}/dishes")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<DishDTO> createDishInRestaurant(@PathVariable Long id, @RequestBody DishDTO dishDTO) {
+        Optional<DishDTO> result = dishService.createDishInRestaurant(id, dishDTO);
+        if (result.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(result.get());
     }
 }

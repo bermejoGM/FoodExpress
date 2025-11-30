@@ -25,12 +25,18 @@ public class RestaurantService {
     public Optional<RestaurantDTO> create(RestaurantDTO restaurantDTO) {
         Restaurant restaurant = restaurantManualMapper.toEntity(restaurantDTO);
         Restaurant saved = restaurantRepository.save(restaurant);
-        
+
         return Optional.of(restaurantManualMapper.toDTO(saved));
     }
 
     public List<RestaurantDTO> getAllRestaurants() {
         return restaurantRepository.findAll().stream()
+                .map(restaurantManualMapper::toDTO)
+                .toList();
+    }
+
+    public List<RestaurantDTO> getRestaurantsByName(String name) {
+        return restaurantRepository.findByNameContainingIgnoreCase(name).stream()
                 .map(restaurantManualMapper::toDTO)
                 .toList();
     }
